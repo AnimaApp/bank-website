@@ -1,26 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import BalanceChart from "../BalanceChart";
 import "./BalanceCard.css";
 
-const balanceUrl = `${process.env.API_URL}balance`;
-
 function BalanceCard({ title }) {
-  const [value, setValue] = useState(0);
-
-  useEffect(() => {
-    fetch(balanceUrl, {
-      headers: { Authorization: `Bearer ${process.env.API_TOKEN}` },
-    })
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setValue(result.data.attributes.Amount);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  }, []);
+  const value = 14000;
 
   return (
     <div className="balance-card">

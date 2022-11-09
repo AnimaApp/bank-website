@@ -1,33 +1,14 @@
 import * as AntDesignIcons from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Button from "../buttons/Button";
 import WireRow from "../WireRow";
 import "./WiresCard.css";
 
-const wiresUrl = `${process.env.API_URL}wires`;
-
 function WiresCard({ title }) {
-  const [wires, setWires] = useState([]);
-
-  useEffect(() => {
-    fetch(wiresUrl, {
-      headers: { Authorization: `Bearer ${process.env.API_TOKEN}` },
-    })
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setWires(
-            result.data.map((item) => ({
-              name: item.attributes.Name,
-              amount: item.attributes.Amount,
-            }))
-          );
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  }, []);
+  const wires = [
+    { name: "Paypal", amount: 2400 },
+    { name: "Stripe", amount: 3200 },
+  ];
 
   return (
     <div className="wires-card">

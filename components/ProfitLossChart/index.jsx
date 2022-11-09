@@ -1,33 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import LineChart from "../charts/LineChart";
 
-const balanceUrl = `${process.env.API_URL}profit-losses?sort=Month`;
-
 function ProfitLossChart() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch(balanceUrl, {
-      headers: { Authorization: `Bearer ${process.env.API_TOKEN}` },
-    })
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setData(
-            result.data.map((item) => ({
-              name: new Date(item.attributes.Month).toLocaleString("default", {
-                month: "long",
-              }),
-              profit: item.attributes.Profit,
-              loss: item.attributes.Loss,
-            }))
-          );
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  }, []);
+  const data = [
+    {
+      name: "January",
+      profit: 3600,
+      loss: 2560,
+    },
+    {
+      name: "February",
+      profit: 3930,
+      loss: 2640,
+    },
+    {
+      name: "March",
+      profit: 2400,
+      loss: 2580,
+    },
+    {
+      name: "April",
+      profit: 3380,
+      loss: 2340,
+    },
+  ];
 
   return (
     <LineChart

@@ -1,49 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DatePicker from "../DatePicker";
 import TransactionRow from "../TransactionRow";
 import "./TransactionsCard.css";
 
-const tranasctionsUrl = `${process.env.API_URL}transactions`;
-
 function TransactionsCard({ title }) {
-  const [transactions, setTransactions] = useState([
-    { name: "January", balance: 0 },
-  ]);
-
-  function fetchTransactions(date = "") {
-    let url = tranasctionsUrl;
-    if (date.length > 0) {
-      url += `?filters[date][$eq]=${date}`;
-    }
-    fetch(url, {
-      headers: { Authorization: `Bearer ${process.env.API_TOKEN}` },
-    })
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setTransactions(
-            result.data.map((item) => ({
-              date: item.attributes.Date,
-              name: item.attributes.Name,
-              amount: item.attributes.Amount,
-            }))
-          );
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  }
-
-  useEffect(() => {
-    fetchTransactions();
-  }, []);
+  const allTransactions = [
+    { name: "Netlify", amount: 5000, date: "2022-01-05" },
+    { name: "AWS", amount: 20000, date: "2022-02-14" },
+    { name: "Google", amount: 3000, date: "2022-03-19" },
+  ];
+  const [transactions, setTransactions] = useState(allTransactions);
 
   function datePickerChange(date) {
     if (date) {
-      fetchTransactions(date.format("YYYY-MM-DD"));
+      const relevantTransactions = allTransactions.filter(
+        (t) => new Date(t["date"]) < date
+      );
+      setTransactions(relevantTransactions);
     } else {
-      fetchTransactions();
+      setTransactions(allTransactions);
     }
   }
 

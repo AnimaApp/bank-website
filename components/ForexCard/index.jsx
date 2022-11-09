@@ -1,41 +1,14 @@
 import * as AntDesignIcons from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Button from "../buttons/Button";
 import ForexChart from "../ForexChart";
 import "./ForexCard.css";
 
-const balanceUrl = `${process.env.API_URL}forex-balance`;
-const rateUrl = `${process.env.API_URL}forex-rate`;
-const buyRateUrl = `${process.env.API_URL}forex-buy-rate`;
-const sellRateUrl = `${process.env.API_URL}forex-sell-rate`;
-
 function ForexCard({ title, currency }) {
-  const [balance, setBalance] = useState(0);
-  const [rate, setRate] = useState(0);
-  const [buyRate, setBuyRate] = useState(0);
-  const [sellRate, setSellRate] = useState(0);
-
-  function getValue(url, func) {
-    fetch(url, {
-      headers: { Authorization: `Bearer ${process.env.API_TOKEN}` },
-    })
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          func(result.data.attributes.Amount);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  }
-
-  useEffect(() => {
-    getValue(balanceUrl, setBalance);
-    getValue(rateUrl, setRate);
-    getValue(sellRateUrl, setSellRate);
-    getValue(buyRateUrl, setBuyRate);
-  }, []);
+  balance = 7000;
+  rate = 1.12;
+  buyRate = 1.13;
+  sellRate = 1.11;
 
   return (
     <div className="forex-card">
